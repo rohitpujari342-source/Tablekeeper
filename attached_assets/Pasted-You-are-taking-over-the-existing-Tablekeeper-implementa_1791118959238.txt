@@ -1,0 +1,262 @@
+You are taking over the existing Tablekeeper implementation for the Dark Factory challenge.
+
+Your job is to **complete Stage 1 using the existing codebase**.
+
+IMPORTANT:
+This is NOT a blank project.
+
+Another coding agent has already implemented part of Stage 1. You have access to the actual project workspace, so **inspect the files yourself before making changes**.
+
+Do NOT assume the project is empty.
+Do NOT blindly rewrite existing code.
+Do NOT implement Stage 2, Stage 3, or Stage 4 yet.
+
+---
+
+# 1. FIRST: INSPECT THE EXISTING PROJECT
+
+Before changing anything:
+
+* Inspect the complete repository structure.
+* Read all existing application code.
+* Read all existing tests.
+* Identify the current entry point and runtime setup.
+* Identify the framework currently being used, if any.
+* Run the existing test suite.
+* Determine what functionality already exists.
+
+Pay particular attention to these existing components if they are present:
+
+* `app/domain.py`
+* `app/security.py`
+* `app/state.py`
+* `app/time_rules.py`
+* `app/validation.py`
+* `tests/test_domain_core.py`
+
+The existing implementation is known to contain infrastructure for:
+
+* Domain errors
+* Idempotency receipts
+* Password hashing with scrypt
+* Bearer-token generation
+* Transactional in-memory state
+* Async locking
+* Atomic candidate-state commits
+* Idempotent writes
+* Export/import
+* Timezone and DST handling
+* Half-open reservation intervals
+* Interval-overlap detection
+* Canonical JSON request identity
+
+Treat these as existing work that should be preserved where correct.
+
+---
+
+# 2. AUDIT AGAINST THE OFFICIAL TABLEKEEPER STAGE 1 SPEC
+
+Use the **official Dark Factory Tablekeeper specification available in the project/workspace** as the source of truth.
+
+Do NOT invent API endpoints, schemas, status codes, error codes, or business rules.
+
+Create an internal gap analysis:
+
+### Already implemented
+
+What Stage 1 requirements are already satisfied?
+
+### Partially implemented
+
+What exists but needs correction or completion?
+
+### Missing
+
+What Stage 1 requirements have not been implemented?
+
+### Risk areas
+
+What requirements are likely to be covered by hidden tests even if visible tests don't cover them?
+
+Do this audit before making major architectural changes.
+
+---
+
+# 3. COMPLETE STAGE 1
+
+Implement every missing or incomplete requirement necessary for a fully compliant Tablekeeper Stage 1 implementation.
+
+The final system must be an actual working Stage 1 service, not merely a collection of helper classes.
+
+Depending on the official specification, this may include areas such as:
+
+* HTTP/API layer
+* authentication
+* restaurant configuration
+* table configuration
+* availability
+* reservation creation
+* reservation lookup
+* reservation cancellation
+* reservation modification
+* reservation correctness
+* validation
+* required error responses
+* idempotent writes
+* concurrent booking protection
+* atomic operations
+* reservation moves
+* state export/import
+* timezone/DST correctness
+* any other explicitly required Stage 1 behavior
+
+These are NOT instructions to invent functionality.
+
+For every item, verify the exact behavior against the official specification.
+
+---
+
+# 4. PRESERVE EXISTING CORRECT IMPLEMENTATION
+
+Do not rewrite working infrastructure simply because you prefer a different architecture.
+
+Build on the existing:
+
+* `ServiceState`
+* `StateStore`
+* idempotency implementation
+* `IdempotencyReceipt`
+* canonical JSON handling
+* security primitives
+* timezone handling
+* interval-overlap logic
+* transactional state model
+
+Only modify existing code when required for correctness, integration, or official Stage 1 compliance.
+
+If an existing implementation is subtly incorrect according to the specification, fix it rather than working around it.
+
+---
+
+# 5. ATOMICITY AND CONCURRENCY ARE CRITICAL
+
+Pay special attention to operations where multiple pieces of state must change together.
+
+A failed operation must not leave partial state behind.
+
+Concurrent requests must not be able to create invalid reservation states.
+
+Test scenarios such as:
+
+* two users attempting the same table simultaneously
+* duplicate idempotent requests
+* idempotency-key reuse with a different request
+* failed multi-item operations
+* reservation moves
+* overlapping reservations
+* back-to-back reservations
+* failed mutations followed by retry
+* export/import while preserving required state
+
+Use the existing transactional state architecture where appropriate.
+
+---
+
+# 6. TEST-DRIVEN VERIFICATION
+
+First run the existing tests.
+
+Then add comprehensive Stage 1 tests for every feature you implement.
+
+Do NOT consider Stage 1 complete merely because the original tests pass.
+
+Add tests covering:
+
+* happy paths
+* malformed requests
+* validation failures
+* authentication failures
+* duplicate requests
+* idempotency
+* concurrency
+* reservation conflicts
+* atomic rollback
+* reservation moves
+* state export/import
+* timezone behavior
+* DST edge cases
+* any hidden-test-sensitive behavior described in the official specification
+
+Run the complete test suite after implementation.
+
+Fix failures rather than weakening or deleting tests.
+
+---
+
+# 7. INTEGRATION / RUNNABILITY
+
+Make sure the project can actually be started and tested as a standalone service.
+
+Verify:
+
+* correct entry point
+* required dependencies
+* correct startup command
+* HTTP server behavior
+* API accessibility
+* test execution
+* clean error handling
+
+If the project is missing required runtime configuration, add the minimum necessary configuration.
+
+Do not add unnecessary dependencies.
+
+---
+
+# 8. FINAL STAGE 1 SELF-AUDIT
+
+After implementation, perform one final comparison against the complete official Stage 1 specification.
+
+Check for requirements that:
+
+* are not covered by visible tests
+* are easy to overlook
+* involve exact response formats
+* involve exact status/error behavior
+* involve concurrency
+* involve atomicity
+* involve idempotency
+* involve state persistence/export/import
+* involve timezone/DST behavior
+
+Do not claim Stage 1 is complete simply because the tests pass.
+
+The written official specification is the source of truth.
+
+---
+
+# 9. FINAL REPORT
+
+When finished, report clearly:
+
+1. Existing functionality discovered.
+2. Stage 1 requirements already satisfied.
+3. Missing functionality identified.
+4. Functionality implemented.
+5. Existing files modified.
+6. New files created.
+7. Tests added.
+8. Total tests passed.
+9. Any remaining known issues.
+10. Whether you believe the implementation is fully compliant with Stage 1, and why.
+
+IMPORTANT:
+
+* Work ONLY on Stage 1.
+* Do NOT implement Stage 2 UI/search/booking-confirmation features unless they are explicitly required by Stage 1.
+* Do NOT implement Stage 3 policy/recurring-reservation features.
+* Do NOT implement Stage 4 closure/replanning features.
+* Preserve correct existing work.
+* Follow the official Tablekeeper specification exactly.
+* Never invent requirements when the specification can be consulted.
+* If something genuinely cannot be determined from the available specification, explicitly flag it instead of guessing.

@@ -1,0 +1,267 @@
+You have already implemented a substantial portion of Tablekeeper Stage 1.
+
+DO NOT restart Stage 1.
+DO NOT rewrite the existing architecture.
+DO NOT move on to Stage 2.
+
+Your task now is to **audit, harden, and finish the existing Stage 1 implementation against the official Tablekeeper Stage 1 specification.**
+
+---
+
+# CURRENT STATUS
+
+The project already contains a working Stage 1 implementation including:
+
+* domain/error handling
+* password hashing and authentication
+* bearer-token authentication
+* transactional state management
+* idempotency
+* timezone/DST handling
+* HTTP server
+* signup/login
+* restaurant listing/detail
+* availability
+* reservation creation
+* reservation lookup/listing
+* reservation cancellation
+* reservation amendment
+* reservation moves
+* atomic multi-reservation moves
+* concurrency protection
+* state export/import
+* validation
+* extensive Stage 1 tests
+
+The existing tests already cover difficult cases such as:
+
+* concurrent identical booking requests
+* concurrent conflicting booking requests
+* idempotency replay
+* idempotency-key reuse
+* atomic reservation swaps
+* atomic rollback
+* cancellation cutoffs
+* DST gaps/folds
+* cross-timezone instants
+* export/import
+* ownership
+* invalid imported state
+
+Therefore, **do not assume large parts of Stage 1 are missing.**
+
+---
+
+# STEP 1 — RUN EVERYTHING FIRST
+
+Before modifying code:
+
+1. Run the complete Stage 1 test suite.
+2. Record the exact number of tests.
+3. Record every failure/error.
+4. Start the HTTP server and verify it actually starts.
+5. Inspect the complete repository structure.
+6. Read the complete existing `service.py`, `server.py`, and Stage 1 tests.
+
+Do not make changes before understanding the current implementation.
+
+---
+
+# STEP 2 — AUDIT AGAINST THE OFFICIAL SPEC
+
+Use the official Tablekeeper Stage 1 specification as the ONLY source of truth for the contract.
+
+Create a checklist internally containing every Stage 1 requirement.
+
+For each requirement classify it as:
+
+* PASS — correctly implemented
+* PARTIAL — implemented but potentially incorrect/incomplete
+* FAIL — missing or incorrect
+* UNCLEAR — cannot be verified from the available specification
+
+Pay special attention to exact:
+
+* endpoint paths
+* HTTP methods
+* request schemas
+* response schemas
+* status codes
+* error codes
+* authentication requirements
+* idempotency semantics
+* ownership rules
+* reservation conflict rules
+* timezone behavior
+* DST behavior
+* opening-hours behavior
+* atomicity
+* concurrency
+* reservation moves
+* export/import behavior
+* validation behavior
+* malformed JSON behavior
+
+DO NOT invent behavior.
+
+If the official specification says something different from the current implementation, the specification wins.
+
+---
+
+# STEP 3 — INSPECT FOR HIDDEN-TEST RISKS
+
+Even if all visible tests pass, look for implementation/spec mismatches that hidden tests could catch.
+
+Specifically inspect:
+
+### Idempotency
+
+Verify:
+
+* same user + method + path + key + equivalent JSON request replays correctly
+* same key with different request is rejected
+* failed mutations do not create receipts
+* concurrent requests cannot execute the mutation twice
+* receipt state survives export/import
+* idempotency behavior matches the exact official status-code rules
+
+### Concurrency
+
+Verify:
+
+* two different users cannot successfully reserve the same table/time
+* atomic moves cannot partially apply
+* amendments cannot partially apply
+* failed transactions leave the previous state untouched
+
+### Time
+
+Verify:
+
+* invalid DST spring-forward times
+* fall-back behavior
+* absolute duration across DST transitions
+* timezone comparisons are performed using instants
+* opening hours are respected
+* slot-grid rules are respected
+
+### Reservations
+
+Verify:
+
+* capacity
+* ownership
+* cancellation
+* amendment
+* conflict detection
+* cancelled reservations no longer occupy tables
+* reservation references remain stable
+* reservation IDs remain stable where required
+
+### Import/export
+
+Verify:
+
+* valid state round-trips
+* invalid state cannot replace live state
+* credentials/tokens required by the spec survive
+* reservations remain valid after restore
+* idempotency receipts remain valid after restore
+
+---
+
+# STEP 4 — FIX ONLY REAL GAPS
+
+After the audit:
+
+* Fix every confirmed Stage 1 discrepancy.
+* Preserve the existing architecture.
+* Make the smallest safe changes necessary.
+* Do not refactor code merely for style.
+* Do not add speculative functionality.
+* Do not implement Stage 2 features.
+* Do not implement Stage 3 features.
+* Do not implement Stage 4 features.
+
+If everything already matches the specification, DO NOT make unnecessary code changes.
+
+---
+
+# STEP 5 — STRENGTHEN TESTS
+
+For every Stage 1 requirement that is currently implemented but not adequately tested:
+
+Add a focused test.
+
+Prioritize tests that exercise:
+
+* exact status codes
+* exact error codes
+* malformed input
+* boundary conditions
+* concurrent requests
+* atomic rollback
+* DST transitions
+* idempotency edge cases
+* export/import edge cases
+
+Do not delete or weaken existing tests.
+
+---
+
+# STEP 6 — RUN THE FULL SUITE AGAIN
+
+After fixes:
+
+1. Run all Stage 1 tests.
+2. Confirm they pass.
+3. If any fail, diagnose and fix the implementation.
+4. Re-run the entire suite.
+5. Verify the HTTP server still starts.
+6. Verify the Docker/runtime setup still works if applicable.
+
+---
+
+# STEP 7 — FINAL COMPLIANCE REPORT
+
+At the end, give me a concise report containing:
+
+### Test status
+
+* tests before changes
+* tests after changes
+* failures/errors remaining
+
+### Specification audit
+
+* PASS count
+* PARTIAL count
+* FAIL count
+* UNCLEAR count
+
+### Code changes
+
+* files modified
+* files added
+* what was fixed
+
+### Remaining risks
+
+List anything that could still be uncertain.
+
+### Final verdict
+
+Choose exactly one:
+
+1. `STAGE 1 COMPLETE`
+2. `STAGE 1 COMPLETE WITH KNOWN RISKS`
+3. `STAGE 1 NOT COMPLETE`
+
+Do NOT say `STAGE 1 COMPLETE` simply because the visible tests pass.
+
+The official written Stage 1 specification is the source of truth.
+
+IMPORTANT:
+This task is ONLY Stage 1 completion and hardening.
+
+Do not start Stage 2.
