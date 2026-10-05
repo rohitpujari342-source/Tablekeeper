@@ -1128,11 +1128,310 @@ h1, h2, h3, .heading-serif {
   100% { background-position: -200% 0; }
 }
 
+/* ==========================================================================
+   NOCTURNE MOTION SYSTEM & SCROLL ANIMATIONS
+   ========================================================================== */
+
+/* Subtle Hero Ambient Motion */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 0.6s var(--ease-out);
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.08) 0%, transparent 65%);
+  pointer-events: none;
+  animation: ambient-pulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes ambient-pulse {
+  0% { opacity: 0.4; transform: scale(1); }
+  100% { opacity: 0.9; transform: scale(1.08); }
+}
+
+.hero-subtitle {
+  display: inline-block;
+  animation: fade-in-up 0.7s var(--ease-out) both;
+}
+
+.hero-title {
+  animation: fade-in-up 0.8s var(--ease-out) 0.1s both;
+}
+
+.hero-description {
+  animation: fade-in-up 0.8s var(--ease-out) 0.2s both;
+}
+
+.search-container {
+  animation: fade-in-up 0.9s var(--ease-out) 0.3s both;
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scroll Reveal Triggers */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s var(--ease-out), transform 0.65s var(--ease-out);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered Card Entrance Animation */
+.restaurant-card {
+  opacity: 0;
+  transform: translateY(24px) scale(0.98);
+  transition: 
+    opacity 0.5s var(--ease-out), 
+    transform 0.5s var(--ease-out), 
+    box-shadow 0.3s var(--ease-out), 
+    border-color 0.3s var(--ease-out);
+  transition-delay: calc(var(--card-delay, 0ms));
+}
+
+.restaurant-card.in-view {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Card Micro-interactions */
+.restaurant-card:hover {
+  transform: translateY(-6px) scale(1.008);
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.75), 0 0 30px rgba(212, 175, 55, 0.14);
+}
+
+.restaurant-card:hover .card-image {
+  transform: scale(1.06);
+}
+
+.view-availability-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.view-availability-btn .btn-arrow {
+  display: inline-block;
+  transition: transform 0.25s var(--ease-out);
+}
+
+.restaurant-card:hover .view-availability-btn,
+.view-availability-btn:hover {
+  background: var(--accent-gold-subtle);
+  border-color: var(--accent-champagne);
+  color: var(--accent-champagne);
+}
+
+.restaurant-card:hover .view-availability-btn .btn-arrow,
+.view-availability-btn:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+/* Button Interactive & Loading States */
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn.is-loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.btn-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  margin-right: 0.4rem;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Availability Loading & Error States */
+.availability-loading-state {
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.loading-pulse-box {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 3rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.luxury-spinner {
+  width: 38px;
+  height: 38px;
+  border: 3px solid rgba(212, 175, 55, 0.15);
+  border-top-color: var(--accent-champagne);
+  border-radius: 50%;
+  animation: spin 0.8s cubic-bezier(0.5, 0.1, 0.5, 0.9) infinite;
+}
+
+.loading-text {
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.availability-error-card {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.error-card-icon {
+  font-size: 1.6rem;
+  color: var(--status-error);
+}
+
+.error-card-content {
+  flex: 1;
+}
+
+.error-title {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+}
+
+.error-desc {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+/* Timeline & Table Interaction States */
+.timeline-slot {
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.timeline-slot:hover:not(.disabled) {
+  border-color: var(--accent-gold);
+  transform: translateY(-2px);
+  background: var(--bg-card);
+}
+
+.table-card {
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.table-card:hover:not(.unavailable):not(.selected) {
+  transform: translateY(-3px);
+  border-color: rgba(212, 175, 55, 0.5);
+  background: var(--bg-surface-elevated);
+}
+
+.table-card.selected {
+  border-color: var(--accent-champagne) !important;
+  box-shadow: 0 0 25px var(--accent-gold-glow), var(--shadow-sm);
+  transform: scale(1.02);
+  background: linear-gradient(145deg, rgba(212, 175, 55, 0.12), var(--bg-surface));
+}
+
+.table-card.unavailable {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+}
+
+/* Reservation Lookup Box */
+.reservation-lookup-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.8rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.lookup-card-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.lookup-inline-form {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Image Fallback System Styling */
+.image-fallback-active {
+  object-fit: cover !important;
+  background-color: #0c1017 !important;
+}
+
+.btn-xs {
+  padding: 0.2rem 0.6rem;
+  font-size: 0.75rem;
+  height: 26px;
+}
+
 /* Accessibility & Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal-on-scroll,
+  .restaurant-card {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 
@@ -1149,15 +1448,16 @@ h1, h2, h3, .heading-serif {
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .navbar {
-    padding: 1rem 1.2rem;
+    padding: 0.9rem 1.2rem;
   }
   .nav-links {
     gap: 1rem;
+    font-size: 0.85rem;
   }
   .hero-title {
-    font-size: 2.2rem;
+    font-size: 2.3rem;
   }
   .search-form {
     grid-template-columns: 1fr;
@@ -1165,7 +1465,23 @@ h1, h2, h3, .heading-serif {
   .search-form .btn {
     grid-column: span 1;
   }
-  .reservation-card {
+  .restaurant-grid {
     grid-template-columns: 1fr;
   }
+  .reservation-card {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .lookup-card-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .lookup-inline-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .lookup-inline-form .input-text {
+    width: 100%;
+  }
 }
+

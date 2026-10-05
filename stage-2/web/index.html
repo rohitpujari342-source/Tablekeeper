@@ -74,6 +74,24 @@
               </div>
 
               <div class="field-group">
+                <label class="field-label" for="search-time">Time</label>
+                <select id="search-time" class="input-select" required>
+                  <option value="12:00">12:00 PM</option>
+                  <option value="12:30">12:30 PM</option>
+                  <option value="13:00">1:00 PM</option>
+                  <option value="13:30">1:30 PM</option>
+                  <option value="18:00">6:00 PM</option>
+                  <option value="18:30">6:30 PM</option>
+                  <option value="19:00" selected>7:00 PM</option>
+                  <option value="19:30">7:30 PM</option>
+                  <option value="20:00">8:00 PM</option>
+                  <option value="20:30">8:30 PM</option>
+                  <option value="21:00">9:00 PM</option>
+                  <option value="21:30">9:30 PM</option>
+                </select>
+              </div>
+
+              <div class="field-group">
                 <label class="field-label" for="search-guests">Guests</label>
                 <select id="search-guests" class="input-select" required>
                   <option value="1">1 Guest</option>
@@ -98,7 +116,7 @@
       </div>
 
       <!-- Featured Restaurants Grid Section with City Filter Bar -->
-      <div class="section">
+      <div class="section reveal-on-scroll">
         <div class="section-header" style="flex-direction: column; align-items: flex-start; gap: 1rem;">
           <div>
             <h2 class="section-title">Global Culinary Destinations</h2>
@@ -106,14 +124,14 @@
           </div>
 
           <!-- City Filter Pills Strip -->
-          <div class="city-filter-strip" id="city-filter-strip">
+          <div class="city-filter-strip" id="city-filter-strip" role="tablist" aria-label="Filter by City">
             <button class="city-chip active" onclick="app.filterByCity('ALL')">All Cities</button>
             <button class="city-chip" onclick="app.filterByCity('Mumbai')">Mumbai 🇮🇳</button>
             <button class="city-chip" onclick="app.filterByCity('Paris')">Paris 🇫🇷</button>
             <button class="city-chip" onclick="app.filterByCity('Tokyo')">Tokyo 🇯🇵</button>
             <button class="city-chip" onclick="app.filterByCity('London')">London 🇬🇧</button>
             <button class="city-chip" onclick="app.filterByCity('New York')">New York 🇺🇸</button>
-            <button class="city-chip" onclick="app.filterByCity('Dubai')">Dubai 🇦🇪</option>
+            <button class="city-chip" onclick="app.filterByCity('Dubai')">Dubai 🇦🇪</button>
             <button class="city-chip" onclick="app.filterByCity('Rome')">Rome 🇮🇹</button>
             <button class="city-chip" onclick="app.filterByCity('Singapore')">Singapore 🇸🇬</button>
             <button class="city-chip" onclick="app.filterByCity('Los Angeles')">Los Angeles 🇺🇸</button>
@@ -158,6 +176,10 @@
                   <span class="param-pill-value" id="avail-summary-date">Today</span>
                 </div>
                 <div class="param-pill">
+                  <span class="param-pill-label">Time</span>
+                  <span class="param-pill-value" id="avail-summary-time">19:00</span>
+                </div>
+                <div class="param-pill">
                   <span class="param-pill-label">Guests</span>
                   <span class="param-pill-value" id="avail-summary-guests">4 Guests</span>
                 </div>
@@ -165,6 +187,24 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <!-- Availability Loading State (Polished Skeleton) -->
+        <div class="availability-loading-state" id="availability-loading-state" style="display: none;">
+          <div class="loading-pulse-box">
+            <div class="luxury-spinner"></div>
+            <span class="loading-text">CONSULTING REAL-TIME FLOOR PLAN & TIMELINE...</span>
+          </div>
+        </div>
+
+        <!-- Availability Error Alert Box (Proper NOCTURNE Styled Error) -->
+        <div class="availability-error-card" id="availability-error-card" style="display: none;">
+          <div class="error-card-icon">⚠</div>
+          <div class="error-card-content">
+            <h4 class="error-title">Availability Temporarily Unavailable</h4>
+            <p class="error-desc" id="availability-error-message">Could not retrieve live table slots from server.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="app.loadAvailability()">RETRY AVAILABILITY</button>
         </div>
 
         <!-- Time Slot Selection Timeline Strip -->
@@ -214,7 +254,7 @@
         </div>
 
         <!-- Booking Summary & Instant Reservation Action -->
-        <div class="booking-summary-panel" id="booking-summary-panel">
+        <div class="booking-summary-panel reveal-on-scroll" id="booking-summary-panel">
           <h3 class="heading-serif" style="font-size: 1.5rem;">Reservation Summary</h3>
 
           <div class="summary-grid">
@@ -236,7 +276,23 @@
             </div>
           </div>
 
-          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <!-- Guest Dining Details -->
+          <div class="booking-guest-fields" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.5rem 0; padding-top: 1.5rem; border-top: 1px solid var(--border-subtle);">
+            <div class="field-group">
+              <label class="field-label" for="booking-guest-name">Guest Name</label>
+              <input type="text" id="booking-guest-name" class="input-text" placeholder="e.g. Eleanor Vance" required autocomplete="name">
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="booking-guest-email">Confirmation Email</label>
+              <input type="email" id="booking-guest-email" class="input-text" placeholder="e.g. guest@example.com" required autocomplete="email">
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="booking-special-requests">Special Dining Notes (Optional)</label>
+              <input type="text" id="booking-special-requests" class="input-text" placeholder="e.g. Window table, Anniversary celebration">
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem;">
             <span class="text-muted" style="font-size: 0.85rem;">🔒 Instant confirmation protected with idempotent transaction key.</span>
             <button class="btn btn-primary" id="btn-confirm-booking" onclick="app.handleConfirmReservation()">
               CONFIRM RESERVATION
@@ -258,7 +314,22 @@
             <h2 class="section-title">My Reservations</h2>
             <p class="section-subtitle">Manage your upcoming and past bookings</p>
           </div>
-          <button class="btn btn-secondary btn-sm" onclick="app.fetchUserReservations()">Refresh</button>
+          <button class="btn btn-secondary btn-sm" id="btn-refresh-reservations" onclick="app.fetchUserReservations()">Refresh</button>
+        </div>
+
+        <!-- Reservation Lookup Box -->
+        <div class="reservation-lookup-box reveal-on-scroll" id="reservation-lookup-box" style="margin-bottom: 2rem;">
+          <div class="lookup-card-inner">
+            <div style="flex: 1;">
+              <h3 class="heading-serif" style="font-size: 1.35rem; margin-bottom: 0.25rem;">Find a Reservation</h3>
+              <p class="text-muted" style="font-size: 0.85rem;">Look up booking details instantly by reference code</p>
+            </div>
+            <form class="lookup-inline-form" onsubmit="app.handleLookupSubmit(event)">
+              <input type="text" id="lookup-ref-input" class="input-text" placeholder="Reference code (e.g. 89X12ABCD)" required style="min-width: 260px; text-transform: uppercase; font-family: monospace; letter-spacing: 0.05em;">
+              <button type="submit" class="btn btn-primary btn-sm" id="btn-lookup-ref">LOOKUP</button>
+            </form>
+          </div>
+          <div id="lookup-result-container" style="display: none; margin-top: 1.25rem;"></div>
         </div>
 
         <div class="reservations-list" id="my-reservations-list">
@@ -284,7 +355,10 @@
 
       <div class="reference-badge-box">
         <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted);">Reservation Reference</span>
-        <span class="reference-code" id="confirmation-ref">REF-89X12</span>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-top: 0.35rem;">
+          <span class="reference-code" id="confirmation-ref">REF-89X12</span>
+          <button type="button" class="btn btn-outline-gold btn-xs" id="btn-copy-ref" onclick="app.copyReferenceCode()" title="Copy code">Copy</button>
+        </div>
       </div>
 
       <div class="summary-grid" style="text-align: left; margin-bottom: 2rem;">
@@ -303,6 +377,10 @@
         <div class="summary-item">
           <span class="summary-label">Table</span>
           <span class="summary-value text-gold" id="conf-table">Table 2</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Guest Name</span>
+          <span class="summary-value" id="conf-guest-name">Guest User</span>
         </div>
       </div>
 

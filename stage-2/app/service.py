@@ -486,73 +486,73 @@ def _default_seed_state() -> ServiceState:
     venues = [
         # MUMBAI (India)
         {"id": "r_mumbai_royal", "name": "The Royal Pavilion & Palace", "city": "Mumbai", "timezone": "Asia/Kolkata", "category": "Indian Royal Fine Dining", "theme": "mumbai_royal", "bg_image": "/assets/mumbai.jpg"},
-        {"id": "r_mumbai_bastian", "name": "Bastian Rooftop & Grill", "city": "Mumbai", "timezone": "Asia/Kolkata", "category": "Rooftop Seafood & Bar", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
-        {"id": "r_mumbai_trident", "name": "Trident Bay Lounge", "city": "Mumbai", "timezone": "Asia/Kolkata", "category": "Luxury Bay Pub & Lounge", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
-        {"id": "r_mumbai_canteen", "name": "The Bombay Canteen Bar", "city": "Mumbai", "timezone": "Asia/Kolkata", "category": "Modern Indian Pub", "theme": "mumbai_royal", "bg_image": "/assets/mumbai.jpg"},
-        {"id": "r_mumbai_zuma", "name": "Masala Library Gastronomy", "city": "Mumbai", "timezone": "Asia/Kolkata", "category": "Molecular Indian Dining", "theme": "mumbai_royal", "bg_image": "/assets/mumbai.jpg"},
+        {"id": "r_mumbai_bastian", "name": "Bastian Rooftop & Grill", "city": "Mumbai", "timezone": "Asia/Kolkata", "category": "Rooftop Seafood & Bar", "theme": "rooftop_sky", "bg_image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_mumbai_trident", "name": "Trident Bay Lounge", "city": "Mumbai", "timezone": "Asia/Kolkata", "category": "Luxury Bay Pub & Lounge", "theme": "rooftop_sky", "bg_image": "https://images.unsplash.com/photo-1578474846511-04ba529f0b88?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_mumbai_canteen", "name": "The Bombay Canteen Bar", "city": "Mumbai", "timezone": "Asia/Kolkata", "category": "Modern Indian Pub", "theme": "mumbai_royal", "bg_image": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_mumbai_zuma", "name": "Masala Library Gastronomy", "city": "Mumbai", "timezone": "Asia/Kolkata", "category": "Molecular Indian Dining", "theme": "mumbai_royal", "bg_image": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=800&q=80"},
 
         # PARIS (France)
         {"id": "r_lumiere", "name": "Lumière Gastronomy", "city": "Paris", "timezone": "Europe/Paris", "category": "Modern French Fine Dining", "theme": "parisian_gold", "bg_image": "/assets/lumiere.jpg"},
-        {"id": "r_maison", "name": "Maison Rouge Bistro", "city": "Paris", "timezone": "Europe/Paris", "category": "Classic French Bistro", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
-        {"id": "r_paris_jules", "name": "Le Jules Verne Eiffel", "city": "Paris", "timezone": "Europe/Paris", "category": "Eiffel Tower Fine Dining", "theme": "parisian_gold", "bg_image": "/assets/hero.jpg"},
-        {"id": "r_paris_meurice", "name": "Le Meurice Alain Ducasse", "city": "Paris", "timezone": "Europe/Paris", "category": "Palace Hotel Dining", "theme": "parisian_gold", "bg_image": "/assets/hero.jpg"},
-        {"id": "r_paris_laperouse", "name": "Lapérouse Historic Lounge", "city": "Paris", "timezone": "Europe/Paris", "category": "Historic Lounge Bar", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
+        {"id": "r_maison", "name": "Maison Rouge Bistro", "city": "Paris", "timezone": "Europe/Paris", "category": "Classic French Bistro", "theme": "dark_velvet", "bg_image": "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_paris_jules", "name": "Le Jules Verne Eiffel", "city": "Paris", "timezone": "Europe/Paris", "category": "Eiffel Tower Fine Dining", "theme": "parisian_gold", "bg_image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_paris_meurice", "name": "Le Meurice Alain Ducasse", "city": "Paris", "timezone": "Europe/Paris", "category": "Palace Hotel Dining", "theme": "parisian_gold", "bg_image": "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_paris_laperouse", "name": "Lapérouse Historic Lounge", "city": "Paris", "timezone": "Europe/Paris", "category": "Historic Lounge Bar", "theme": "dark_velvet", "bg_image": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&q=80"},
 
         # TOKYO (Japan)
-        {"id": "r_omakase", "name": "Ginza Omakase Counter", "city": "Tokyo", "timezone": "Asia/Tokyo", "category": "Japanese Omakase", "theme": "tokyo_slate", "bg_image": "/assets/lumiere.jpg"},
-        {"id": "r_tokyo_roppongi", "name": "Roppongi Sky Lounge", "city": "Tokyo", "timezone": "Asia/Tokyo", "category": "Cocktail Lounge & Pub", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
-        {"id": "r_tokyo_sukiyabashi", "name": "Sukiyabashi Sushi Bar", "city": "Tokyo", "timezone": "Asia/Tokyo", "category": "Traditional Sushi Counter", "theme": "tokyo_slate", "bg_image": "/assets/lumiere.jpg"},
-        {"id": "r_tokyo_narisawa", "name": "Narisawa Innovative Grill", "city": "Tokyo", "timezone": "Asia/Tokyo", "category": "Avant-Garde Dining", "theme": "tokyo_slate", "bg_image": "/assets/lumiere.jpg"},
-        {"id": "r_tokyo_parkhyatt", "name": "New York Grill Tokyo", "city": "Tokyo", "timezone": "Asia/Tokyo", "category": "Skyline Steakhouse & Bar", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
+        {"id": "r_omakase", "name": "Ginza Omakase Counter", "city": "Tokyo", "timezone": "Asia/Tokyo", "category": "Japanese Omakase", "theme": "tokyo_slate", "bg_image": "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_tokyo_roppongi", "name": "Roppongi Sky Lounge", "city": "Tokyo", "timezone": "Asia/Tokyo", "category": "Cocktail Lounge & Pub", "theme": "rooftop_sky", "bg_image": "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_tokyo_sukiyabashi", "name": "Sukiyabashi Sushi Bar", "city": "Tokyo", "timezone": "Asia/Tokyo", "category": "Traditional Sushi Counter", "theme": "tokyo_slate", "bg_image": "https://images.unsplash.com/photo-1611143669185-af224c5e3252?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_tokyo_narisawa", "name": "Narisawa Innovative Grill", "city": "Tokyo", "timezone": "Asia/Tokyo", "category": "Avant-Garde Dining", "theme": "tokyo_slate", "bg_image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_tokyo_parkhyatt", "name": "New York Grill Tokyo", "city": "Tokyo", "timezone": "Asia/Tokyo", "category": "Skyline Steakhouse & Bar", "theme": "rooftop_sky", "bg_image": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80"},
 
         # LONDON (UK)
-        {"id": "r_velvet", "name": "Velvet & Oak Gastropub", "city": "London", "timezone": "Europe/London", "category": "British Gastropub & Grill", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
-        {"id": "r_london_wolseley", "name": "The Wolseley Piccadilly", "city": "London", "timezone": "Europe/London", "category": "Grand European Cafe", "theme": "parisian_gold", "bg_image": "/assets/hero.jpg"},
-        {"id": "r_london_mayfair", "name": "Mayfair Prime Steakhouse", "city": "London", "timezone": "Europe/London", "category": "Mayfair Steak & Wine", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
-        {"id": "r_london_sketch", "name": "Sketch Gallery Lounge", "city": "London", "timezone": "Europe/London", "category": "Artisan Cocktail Lounge", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
-        {"id": "r_london_ritz", "name": "The Ritz Restaurant", "city": "London", "timezone": "Europe/London", "category": "British Palace Dining", "theme": "parisian_gold", "bg_image": "/assets/hero.jpg"},
+        {"id": "r_velvet", "name": "Velvet & Oak Gastropub", "city": "London", "timezone": "Europe/London", "category": "British Gastropub & Grill", "theme": "dark_velvet", "bg_image": "https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_london_wolseley", "name": "The Wolseley Piccadilly", "city": "London", "timezone": "Europe/London", "category": "Grand European Cafe", "theme": "parisian_gold", "bg_image": "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_london_mayfair", "name": "Mayfair Prime Steakhouse", "city": "London", "timezone": "Europe/London", "category": "Mayfair Steak & Wine", "theme": "dark_velvet", "bg_image": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_london_sketch", "name": "Sketch Gallery Lounge", "city": "London", "timezone": "Europe/London", "category": "Artisan Cocktail Lounge", "theme": "rooftop_sky", "bg_image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_london_ritz", "name": "The Ritz Restaurant", "city": "London", "timezone": "Europe/London", "category": "British Palace Dining", "theme": "parisian_gold", "bg_image": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80"},
 
         # NEW YORK (USA)
         {"id": "r_nocturne", "name": "Nocturne Sky Lounge", "city": "New York", "timezone": "America/New_York", "category": "Manhattan Rooftop Lounge", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
-        {"id": "r_ny_manhatta", "name": "Manhatta High-Rise Grill", "city": "New York", "timezone": "America/New_York", "category": "Downtown Panoramic Grill", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
-        {"id": "r_ny_balthazar", "name": "Balthazar SoHo Bistro", "city": "New York", "timezone": "America/New_York", "category": "SoHo French Bistro", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
-        {"id": "r_ny_eleven", "name": "Eleven Madison Fine Dining", "city": "New York", "timezone": "America/New_York", "category": "3-Star Fine Dining", "theme": "parisian_gold", "bg_image": "/assets/hero.jpg"},
-        {"id": "r_ny_bernardin", "name": "Le Bernardin Seafood", "city": "New York", "timezone": "America/New_York", "category": "Luxury Seafood Dining", "theme": "tokyo_slate", "bg_image": "/assets/lumiere.jpg"},
+        {"id": "r_ny_manhatta", "name": "Manhatta High-Rise Grill", "city": "New York", "timezone": "America/New_York", "category": "Downtown Panoramic Grill", "theme": "rooftop_sky", "bg_image": "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_ny_balthazar", "name": "Balthazar SoHo Bistro", "city": "New York", "timezone": "America/New_York", "category": "SoHo French Bistro", "theme": "dark_velvet", "bg_image": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_ny_eleven", "name": "Eleven Madison Fine Dining", "city": "New York", "timezone": "America/New_York", "category": "3-Star Fine Dining", "theme": "parisian_gold", "bg_image": "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_ny_bernardin", "name": "Le Bernardin Seafood", "city": "New York", "timezone": "America/New_York", "category": "Luxury Seafood Dining", "theme": "tokyo_slate", "bg_image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80"},
 
         # DUBAI (UAE)
-        {"id": "r_dubai_atmosphere", "name": "At.mosphere Burj Khalifa", "city": "Dubai", "timezone": "Asia/Dubai", "category": "Burj Skyline Lounge", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
-        {"id": "r_dubai_zuma", "name": "Zuma Dubai Lounge", "city": "Dubai", "timezone": "Asia/Dubai", "category": "Contemporary Asian Pub", "theme": "tokyo_slate", "bg_image": "/assets/lumiere.jpg"},
-        {"id": "r_dubai_ossiano", "name": "Ossiano Underwater Dining", "city": "Dubai", "timezone": "Asia/Dubai", "category": "Underwater Fine Dining", "theme": "mumbai_royal", "bg_image": "/assets/mumbai.jpg"},
-        {"id": "r_dubai_tresind", "name": "Trèsind Studio Gastronomy", "city": "Dubai", "timezone": "Asia/Dubai", "category": "Modern Indian Gastronomy", "theme": "mumbai_royal", "bg_image": "/assets/mumbai.jpg"},
-        {"id": "r_dubai_nusr", "name": "Nusr-Et Steakhouse Dubai", "city": "Dubai", "timezone": "Asia/Dubai", "category": "Luxury Steakhouse Pub", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
+        {"id": "r_dubai_atmosphere", "name": "At.mosphere Burj Khalifa", "city": "Dubai", "timezone": "Asia/Dubai", "category": "Burj Skyline Lounge", "theme": "rooftop_sky", "bg_image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_dubai_zuma", "name": "Zuma Dubai Lounge", "city": "Dubai", "timezone": "Asia/Dubai", "category": "Contemporary Asian Pub", "theme": "tokyo_slate", "bg_image": "https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_dubai_ossiano", "name": "Ossiano Underwater Dining", "city": "Dubai", "timezone": "Asia/Dubai", "category": "Underwater Fine Dining", "theme": "mumbai_royal", "bg_image": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_dubai_tresind", "name": "Trèsind Studio Gastronomy", "city": "Dubai", "timezone": "Asia/Dubai", "category": "Modern Indian Gastronomy", "theme": "mumbai_royal", "bg_image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_dubai_nusr", "name": "Nusr-Et Steakhouse Dubai", "city": "Dubai", "timezone": "Asia/Dubai", "category": "Luxury Steakhouse Pub", "theme": "dark_velvet", "bg_image": "https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=800&q=80"},
 
         # ROME (Italy)
-        {"id": "r_toscana", "name": "Villa Toscana Cellar", "city": "Rome", "timezone": "Europe/Rome", "category": "Tuscan Trattoria & Wine", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
-        {"id": "r_rome_pergola", "name": "La Pergola Rome", "city": "Rome", "timezone": "Europe/Rome", "category": "Panoromic Fine Dining", "theme": "parisian_gold", "bg_image": "/assets/hero.jpg"},
-        {"id": "r_rome_aroma", "name": "Aroma Rooftop Colosseum", "city": "Rome", "timezone": "Europe/Rome", "category": "Colosseum View Lounge", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
-        {"id": "r_rome_imago", "name": "Imàgo Rooftop Bar", "city": "Rome", "timezone": "Europe/Rome", "category": "Hassler Rooftop Bar", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
-        {"id": "r_rome_roscioli", "name": "Salumeria Roscioli", "city": "Rome", "timezone": "Europe/Rome", "category": "Historic Italian Bistro", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
+        {"id": "r_toscana", "name": "Villa Toscana Cellar", "city": "Rome", "timezone": "Europe/Rome", "category": "Tuscan Trattoria & Wine", "theme": "dark_velvet", "bg_image": "https://images.unsplash.com/photo-1537047902294-62a40c20a6ae?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_rome_pergola", "name": "La Pergola Rome", "city": "Rome", "timezone": "Europe/Rome", "category": "Panoromic Fine Dining", "theme": "parisian_gold", "bg_image": "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_rome_aroma", "name": "Aroma Rooftop Colosseum", "city": "Rome", "timezone": "Europe/Rome", "category": "Colosseum View Lounge", "theme": "rooftop_sky", "bg_image": "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_rome_imago", "name": "Imàgo Rooftop Bar", "city": "Rome", "timezone": "Europe/Rome", "category": "Hassler Rooftop Bar", "theme": "rooftop_sky", "bg_image": "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_rome_roscioli", "name": "Salumeria Roscioli", "city": "Rome", "timezone": "Europe/Rome", "category": "Historic Italian Bistro", "theme": "dark_velvet", "bg_image": "https://images.unsplash.com/photo-1481931098730-318b6f776db0?auto=format&fit=crop&w=800&q=80"},
 
         # SINGAPORE (Singapore)
-        {"id": "r_opium", "name": "Opium Night Lounge", "city": "Singapore", "timezone": "Asia/Singapore", "category": "Asian Fusion Lounge", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
-        {"id": "r_sg_mbs", "name": "Marina Bay Sands Grill", "city": "Singapore", "timezone": "Asia/Singapore", "category": "Rooftop SkyPark Bar", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
-        {"id": "r_sg_odette", "name": "Odette Fine Dining", "city": "Singapore", "timezone": "Asia/Singapore", "category": "Modern French Dining", "theme": "parisian_gold", "bg_image": "/assets/hero.jpg"},
-        {"id": "r_sg_jumbo", "name": "Jumbo Seafood Bay", "city": "Singapore", "timezone": "Asia/Singapore", "category": "Coastal Seafood & Pub", "theme": "mumbai_royal", "bg_image": "/assets/mumbai.jpg"},
-        {"id": "r_sg_atlas", "name": "Atlas Bar & Lounge", "city": "Singapore", "timezone": "Asia/Singapore", "category": "Art Deco Gin Lounge", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
+        {"id": "r_opium", "name": "Opium Night Lounge", "city": "Singapore", "timezone": "Asia/Singapore", "category": "Asian Fusion Lounge", "theme": "rooftop_sky", "bg_image": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_sg_mbs", "name": "Marina Bay Sands Grill", "city": "Singapore", "timezone": "Asia/Singapore", "category": "Rooftop SkyPark Bar", "theme": "rooftop_sky", "bg_image": "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_sg_odette", "name": "Odette Fine Dining", "city": "Singapore", "timezone": "Asia/Singapore", "category": "Modern French Dining", "theme": "parisian_gold", "bg_image": "https://images.unsplash.com/photo-1560624052-449f5ddf0c31?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_sg_jumbo", "name": "Jumbo Seafood Bay", "city": "Singapore", "timezone": "Asia/Singapore", "category": "Coastal Seafood & Pub", "theme": "mumbai_royal", "bg_image": "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_sg_atlas", "name": "Atlas Bar & Lounge", "city": "Singapore", "timezone": "Asia/Singapore", "category": "Art Deco Gin Lounge", "theme": "dark_velvet", "bg_image": "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=800&q=80"},
 
         # LOS ANGELES (USA)
-        {"id": "r_celestial", "name": "Celestial Rooftop & Hotel", "city": "Los Angeles", "timezone": "America/Los_Angeles", "category": "Rooftop Hotel & Bar", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
-        {"id": "r_la_spago", "name": "Spago Beverly Hills", "city": "Los Angeles", "timezone": "America/Los_Angeles", "category": "Beverly Hills Dining", "theme": "parisian_gold", "bg_image": "/assets/hero.jpg"},
-        {"id": "r_la_nobu", "name": "Nobu Malibu Beach", "city": "Los Angeles", "timezone": "America/Los_Angeles", "category": "Coastal Japanese Lounge", "theme": "tokyo_slate", "bg_image": "/assets/lumiere.jpg"},
-        {"id": "r_la_republicue", "name": "République Brasserie", "city": "Los Angeles", "timezone": "America/Los_Angeles", "category": "French Brasserie Pub", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
-        {"id": "r_la_providence", "name": "Providence Seafood", "city": "Los Angeles", "timezone": "America/Los_Angeles", "category": "Michelin Seafood", "theme": "tokyo_slate", "bg_image": "/assets/lumiere.jpg"},
+        {"id": "r_celestial", "name": "Celestial Rooftop & Hotel", "city": "Los Angeles", "timezone": "America/Los_Angeles", "category": "Rooftop Hotel & Bar", "theme": "rooftop_sky", "bg_image": "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_la_spago", "name": "Spago Beverly Hills", "city": "Los Angeles", "timezone": "America/Los_Angeles", "category": "Beverly Hills Dining", "theme": "parisian_gold", "bg_image": "https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_la_nobu", "name": "Nobu Malibu Beach", "city": "Los Angeles", "timezone": "America/Los_Angeles", "category": "Coastal Japanese Lounge", "theme": "tokyo_slate", "bg_image": "https://images.unsplash.com/photo-1559329007-40df8a9345d8?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_la_republicue", "name": "République Brasserie", "city": "Los Angeles", "timezone": "America/Los_Angeles", "category": "French Brasserie Pub", "theme": "dark_velvet", "bg_image": "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_la_providence", "name": "Providence Seafood", "city": "Los Angeles", "timezone": "America/Los_Angeles", "category": "Michelin Seafood", "theme": "tokyo_slate", "bg_image": "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80"},
 
         # BERLIN (Germany)
         {"id": "r_anker", "name": "Zum Anker Fine Dining", "city": "Berlin", "timezone": "Europe/Berlin", "category": "German Fine Dining", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
-        {"id": "r_berlin_borchardt", "name": "Borchardt Gastronomy", "city": "Berlin", "timezone": "Europe/Berlin", "category": "Classic Berlin Bistro", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
-        {"id": "r_berlin_grill", "name": "Grill Royal Spree", "city": "Berlin", "timezone": "Europe/Berlin", "category": "Waterfront Steakhouse", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
-        {"id": "r_berlin_timraue", "name": "Restaurant Tim Raue", "city": "Berlin", "timezone": "Europe/Berlin", "category": "Asian Inspired Dining", "theme": "mumbai_royal", "bg_image": "/assets/mumbai.jpg"},
-        {"id": "r_berlin_facil", "name": "FACIL Garden Restaurant", "city": "Berlin", "timezone": "Europe/Berlin", "category": "Glasshouse Fine Dining", "theme": "parisian_gold", "bg_image": "/assets/hero.jpg"},
+        {"id": "r_berlin_borchardt", "name": "Borchardt Gastronomy", "city": "Berlin", "timezone": "Europe/Berlin", "category": "Classic Berlin Bistro", "theme": "dark_velvet", "bg_image": "https://images.unsplash.com/photo-1484659619207-9165d119dafe?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_berlin_grill", "name": "Grill Royal Spree", "city": "Berlin", "timezone": "Europe/Berlin", "category": "Waterfront Steakhouse", "theme": "rooftop_sky", "bg_image": "https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_berlin_timraue", "name": "Restaurant Tim Raue", "city": "Berlin", "timezone": "Europe/Berlin", "category": "Asian Inspired Dining", "theme": "mumbai_royal", "bg_image": "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?auto=format&fit=crop&w=800&q=80"},
+        {"id": "r_berlin_facil", "name": "FACIL Garden Restaurant", "city": "Berlin", "timezone": "Europe/Berlin", "category": "Glasshouse Fine Dining", "theme": "parisian_gold", "bg_image": "https://images.unsplash.com/photo-1498654896293-37aacf113fd9?auto=format&fit=crop&w=800&q=80"},
     ]
 
     restaurants_dict = {}
