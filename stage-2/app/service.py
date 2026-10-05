@@ -473,28 +473,116 @@ def _query_one(query: dict[str, list[str]], name: str) -> str:
 
 def _default_seed_state() -> ServiceState:
     weekdays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
-    default_hours = [
-        {"weekday": d, "opens": "18:00", "closes": "23:00"}
-        for d in ("thu", "fri")
+    default_hours = [{"weekday": d, "opens": "08:00", "closes": "23:30"} for d in weekdays]
+
+    def make_tables(count: int) -> list[dict[str, Any]]:
+        tables = []
+        capacities = [2, 2, 4, 4, 6, 8]
+        for i in range(1, count + 1):
+            cap = capacities[(i - 1) % len(capacities)]
+            tables.append({"id": f"t_{i}", "label": str(i), "capacity": cap})
+        return tables
+
+    venues = [
+        # MUMBAI (India)
+        {"id": "r_mumbai_royal", "name": "The Royal Pavilion & Palace", "city": "Mumbai", "timezone": "Asia/Kolkata", "category": "Indian Royal Fine Dining", "theme": "mumbai_royal", "bg_image": "/assets/mumbai.jpg"},
+        {"id": "r_mumbai_bastian", "name": "Bastian Rooftop & Grill", "city": "Mumbai", "timezone": "Asia/Kolkata", "category": "Rooftop Seafood & Bar", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
+        {"id": "r_mumbai_trident", "name": "Trident Bay Lounge", "city": "Mumbai", "timezone": "Asia/Kolkata", "category": "Luxury Bay Pub & Lounge", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
+        {"id": "r_mumbai_canteen", "name": "The Bombay Canteen Bar", "city": "Mumbai", "timezone": "Asia/Kolkata", "category": "Modern Indian Pub", "theme": "mumbai_royal", "bg_image": "/assets/mumbai.jpg"},
+        {"id": "r_mumbai_zuma", "name": "Masala Library Gastronomy", "city": "Mumbai", "timezone": "Asia/Kolkata", "category": "Molecular Indian Dining", "theme": "mumbai_royal", "bg_image": "/assets/mumbai.jpg"},
+
+        # PARIS (France)
+        {"id": "r_lumiere", "name": "Lumière Gastronomy", "city": "Paris", "timezone": "Europe/Paris", "category": "Modern French Fine Dining", "theme": "parisian_gold", "bg_image": "/assets/lumiere.jpg"},
+        {"id": "r_maison", "name": "Maison Rouge Bistro", "city": "Paris", "timezone": "Europe/Paris", "category": "Classic French Bistro", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
+        {"id": "r_paris_jules", "name": "Le Jules Verne Eiffel", "city": "Paris", "timezone": "Europe/Paris", "category": "Eiffel Tower Fine Dining", "theme": "parisian_gold", "bg_image": "/assets/hero.jpg"},
+        {"id": "r_paris_meurice", "name": "Le Meurice Alain Ducasse", "city": "Paris", "timezone": "Europe/Paris", "category": "Palace Hotel Dining", "theme": "parisian_gold", "bg_image": "/assets/hero.jpg"},
+        {"id": "r_paris_laperouse", "name": "Lapérouse Historic Lounge", "city": "Paris", "timezone": "Europe/Paris", "category": "Historic Lounge Bar", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
+
+        # TOKYO (Japan)
+        {"id": "r_omakase", "name": "Ginza Omakase Counter", "city": "Tokyo", "timezone": "Asia/Tokyo", "category": "Japanese Omakase", "theme": "tokyo_slate", "bg_image": "/assets/lumiere.jpg"},
+        {"id": "r_tokyo_roppongi", "name": "Roppongi Sky Lounge", "city": "Tokyo", "timezone": "Asia/Tokyo", "category": "Cocktail Lounge & Pub", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
+        {"id": "r_tokyo_sukiyabashi", "name": "Sukiyabashi Sushi Bar", "city": "Tokyo", "timezone": "Asia/Tokyo", "category": "Traditional Sushi Counter", "theme": "tokyo_slate", "bg_image": "/assets/lumiere.jpg"},
+        {"id": "r_tokyo_narisawa", "name": "Narisawa Innovative Grill", "city": "Tokyo", "timezone": "Asia/Tokyo", "category": "Avant-Garde Dining", "theme": "tokyo_slate", "bg_image": "/assets/lumiere.jpg"},
+        {"id": "r_tokyo_parkhyatt", "name": "New York Grill Tokyo", "city": "Tokyo", "timezone": "Asia/Tokyo", "category": "Skyline Steakhouse & Bar", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
+
+        # LONDON (UK)
+        {"id": "r_velvet", "name": "Velvet & Oak Gastropub", "city": "London", "timezone": "Europe/London", "category": "British Gastropub & Grill", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
+        {"id": "r_london_wolseley", "name": "The Wolseley Piccadilly", "city": "London", "timezone": "Europe/London", "category": "Grand European Cafe", "theme": "parisian_gold", "bg_image": "/assets/hero.jpg"},
+        {"id": "r_london_mayfair", "name": "Mayfair Prime Steakhouse", "city": "London", "timezone": "Europe/London", "category": "Mayfair Steak & Wine", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
+        {"id": "r_london_sketch", "name": "Sketch Gallery Lounge", "city": "London", "timezone": "Europe/London", "category": "Artisan Cocktail Lounge", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
+        {"id": "r_london_ritz", "name": "The Ritz Restaurant", "city": "London", "timezone": "Europe/London", "category": "British Palace Dining", "theme": "parisian_gold", "bg_image": "/assets/hero.jpg"},
+
+        # NEW YORK (USA)
+        {"id": "r_nocturne", "name": "Nocturne Sky Lounge", "city": "New York", "timezone": "America/New_York", "category": "Manhattan Rooftop Lounge", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
+        {"id": "r_ny_manhatta", "name": "Manhatta High-Rise Grill", "city": "New York", "timezone": "America/New_York", "category": "Downtown Panoramic Grill", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
+        {"id": "r_ny_balthazar", "name": "Balthazar SoHo Bistro", "city": "New York", "timezone": "America/New_York", "category": "SoHo French Bistro", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
+        {"id": "r_ny_eleven", "name": "Eleven Madison Fine Dining", "city": "New York", "timezone": "America/New_York", "category": "3-Star Fine Dining", "theme": "parisian_gold", "bg_image": "/assets/hero.jpg"},
+        {"id": "r_ny_bernardin", "name": "Le Bernardin Seafood", "city": "New York", "timezone": "America/New_York", "category": "Luxury Seafood Dining", "theme": "tokyo_slate", "bg_image": "/assets/lumiere.jpg"},
+
+        # DUBAI (UAE)
+        {"id": "r_dubai_atmosphere", "name": "At.mosphere Burj Khalifa", "city": "Dubai", "timezone": "Asia/Dubai", "category": "Burj Skyline Lounge", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
+        {"id": "r_dubai_zuma", "name": "Zuma Dubai Lounge", "city": "Dubai", "timezone": "Asia/Dubai", "category": "Contemporary Asian Pub", "theme": "tokyo_slate", "bg_image": "/assets/lumiere.jpg"},
+        {"id": "r_dubai_ossiano", "name": "Ossiano Underwater Dining", "city": "Dubai", "timezone": "Asia/Dubai", "category": "Underwater Fine Dining", "theme": "mumbai_royal", "bg_image": "/assets/mumbai.jpg"},
+        {"id": "r_dubai_tresind", "name": "Trèsind Studio Gastronomy", "city": "Dubai", "timezone": "Asia/Dubai", "category": "Modern Indian Gastronomy", "theme": "mumbai_royal", "bg_image": "/assets/mumbai.jpg"},
+        {"id": "r_dubai_nusr", "name": "Nusr-Et Steakhouse Dubai", "city": "Dubai", "timezone": "Asia/Dubai", "category": "Luxury Steakhouse Pub", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
+
+        # ROME (Italy)
+        {"id": "r_toscana", "name": "Villa Toscana Cellar", "city": "Rome", "timezone": "Europe/Rome", "category": "Tuscan Trattoria & Wine", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
+        {"id": "r_rome_pergola", "name": "La Pergola Rome", "city": "Rome", "timezone": "Europe/Rome", "category": "Panoromic Fine Dining", "theme": "parisian_gold", "bg_image": "/assets/hero.jpg"},
+        {"id": "r_rome_aroma", "name": "Aroma Rooftop Colosseum", "city": "Rome", "timezone": "Europe/Rome", "category": "Colosseum View Lounge", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
+        {"id": "r_rome_imago", "name": "Imàgo Rooftop Bar", "city": "Rome", "timezone": "Europe/Rome", "category": "Hassler Rooftop Bar", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
+        {"id": "r_rome_roscioli", "name": "Salumeria Roscioli", "city": "Rome", "timezone": "Europe/Rome", "category": "Historic Italian Bistro", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
+
+        # SINGAPORE (Singapore)
+        {"id": "r_opium", "name": "Opium Night Lounge", "city": "Singapore", "timezone": "Asia/Singapore", "category": "Asian Fusion Lounge", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
+        {"id": "r_sg_mbs", "name": "Marina Bay Sands Grill", "city": "Singapore", "timezone": "Asia/Singapore", "category": "Rooftop SkyPark Bar", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
+        {"id": "r_sg_odette", "name": "Odette Fine Dining", "city": "Singapore", "timezone": "Asia/Singapore", "category": "Modern French Dining", "theme": "parisian_gold", "bg_image": "/assets/hero.jpg"},
+        {"id": "r_sg_jumbo", "name": "Jumbo Seafood Bay", "city": "Singapore", "timezone": "Asia/Singapore", "category": "Coastal Seafood & Pub", "theme": "mumbai_royal", "bg_image": "/assets/mumbai.jpg"},
+        {"id": "r_sg_atlas", "name": "Atlas Bar & Lounge", "city": "Singapore", "timezone": "Asia/Singapore", "category": "Art Deco Gin Lounge", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
+
+        # LOS ANGELES (USA)
+        {"id": "r_celestial", "name": "Celestial Rooftop & Hotel", "city": "Los Angeles", "timezone": "America/Los_Angeles", "category": "Rooftop Hotel & Bar", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
+        {"id": "r_la_spago", "name": "Spago Beverly Hills", "city": "Los Angeles", "timezone": "America/Los_Angeles", "category": "Beverly Hills Dining", "theme": "parisian_gold", "bg_image": "/assets/hero.jpg"},
+        {"id": "r_la_nobu", "name": "Nobu Malibu Beach", "city": "Los Angeles", "timezone": "America/Los_Angeles", "category": "Coastal Japanese Lounge", "theme": "tokyo_slate", "bg_image": "/assets/lumiere.jpg"},
+        {"id": "r_la_republicue", "name": "République Brasserie", "city": "Los Angeles", "timezone": "America/Los_Angeles", "category": "French Brasserie Pub", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
+        {"id": "r_la_providence", "name": "Providence Seafood", "city": "Los Angeles", "timezone": "America/Los_Angeles", "category": "Michelin Seafood", "theme": "tokyo_slate", "bg_image": "/assets/lumiere.jpg"},
+
+        # BERLIN (Germany)
+        {"id": "r_anker", "name": "Zum Anker Fine Dining", "city": "Berlin", "timezone": "Europe/Berlin", "category": "German Fine Dining", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
+        {"id": "r_berlin_borchardt", "name": "Borchardt Gastronomy", "city": "Berlin", "timezone": "Europe/Berlin", "category": "Classic Berlin Bistro", "theme": "dark_velvet", "bg_image": "/assets/anker.jpg"},
+        {"id": "r_berlin_grill", "name": "Grill Royal Spree", "city": "Berlin", "timezone": "Europe/Berlin", "category": "Waterfront Steakhouse", "theme": "rooftop_sky", "bg_image": "/assets/rooftop.jpg"},
+        {"id": "r_berlin_timraue", "name": "Restaurant Tim Raue", "city": "Berlin", "timezone": "Europe/Berlin", "category": "Asian Inspired Dining", "theme": "mumbai_royal", "bg_image": "/assets/mumbai.jpg"},
+        {"id": "r_berlin_facil", "name": "FACIL Garden Restaurant", "city": "Berlin", "timezone": "Europe/Berlin", "category": "Glasshouse Fine Dining", "theme": "parisian_gold", "bg_image": "/assets/hero.jpg"},
     ]
-    restaurants_dict = {
-        "r_anker": {
-            "id": "r_anker",
-            "name": "Zum Anker",
-            "timezone": "Europe/Berlin",
+
+    restaurants_dict = {}
+    for v in venues:
+        restaurants_dict[v["id"]] = {
+            "id": v["id"],
+            "name": v["name"],
+            "city": v["city"],
+            "timezone": v["timezone"],
+            "category": v["category"],
+            "theme": v["theme"],
+            "bg_image": v["bg_image"],
             "slot_minutes": 30,
             "reservation_duration_minutes": 90,
-            "cancellation_cutoff_minutes": 120,
+            "cancellation_cutoff_minutes": 0,
             "opening_hours": default_hours,
-            "tables": [
-                {"id": "t_1", "label": "1", "capacity": 2},
-                {"id": "t_2", "label": "2", "capacity": 4},
-            ],
+            "tables": make_tables(6),
         }
-    }
+
+    user_guest_id = "u_guest"
     user_ada_id = "u_ada"
     user_bob_id = "u_bob"
+
     users_dict = {
+        user_guest_id: {
+            "id": user_guest_id,
+            "email": "guest@example.com",
+            "password_hash": hash_password("correct horse"),
+            "display_name": "Guest User",
+        },
         user_ada_id: {
             "id": user_ada_id,
             "email": "ada@example.com",
@@ -508,9 +596,16 @@ def _default_seed_state() -> ServiceState:
             "display_name": "Bob",
         },
     }
+
+    tokens_dict = {
+        "guest-token-123456": user_guest_id,
+        "token-ada-123456": user_ada_id,
+        "token-bob-123456": user_bob_id,
+    }
+
     return ServiceState(
         users=users_dict,
-        tokens={},
+        tokens=tokens_dict,
         restaurants=restaurants_dict,
         reservations={},
         receipts={},
@@ -559,8 +654,26 @@ class TablekeeperService:
             await self.store.replace(candidate)
             return ApiResponse(204)
 
-        if method == "GET" and path == "/":
-            return ApiResponse(200, {"service": "Tablekeeper", "stage": 1, "health": "/health"})
+        if method == "GET" and path in ("/", "/index.html"):
+            accept = headers.get("accept", "")
+            if "text/html" in accept or "application/json" not in accept:
+                web_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "web")
+                index_path = os.path.join(web_dir, "index.html")
+                if os.path.isfile(index_path):
+                    with open(index_path, "rb") as f:
+                        return ApiResponse(200, f.read(), content_type="text/html; charset=utf-8")
+            return ApiResponse(200, {"service": "Tablekeeper", "stage": 2, "health": "/health"})
+
+        if method == "GET" and (path.startswith(("/static/", "/assets/")) or path.endswith((".css", ".js", ".jpg", ".jpeg", ".png", ".webp", ".svg", ".woff2", ".ico"))):
+            rel_path = path.lstrip("/")
+            if rel_path.startswith("static/"):
+                rel_path = rel_path[len("static/"):]
+            web_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "web")
+            file_path = os.path.abspath(os.path.join(web_dir, rel_path))
+            if file_path.startswith(web_dir) and os.path.isfile(file_path):
+                content_type = self._guess_content_type(file_path)
+                with open(file_path, "rb") as f:
+                    return ApiResponse(200, f.read(), content_type=content_type)
 
         if method == "POST" and path in ("/auth/signup", "/auth/login"):
             payload = _require_object(body)
@@ -634,6 +747,25 @@ class TablekeeperService:
                 return await self._patch_reservation(reference, user_id, payload)
 
         raise _not_found()
+
+    def _guess_content_type(self, path: str) -> str:
+        if path.endswith(".html"):
+            return "text/html; charset=utf-8"
+        if path.endswith(".css"):
+            return "text/css; charset=utf-8"
+        if path.endswith(".js"):
+            return "application/javascript; charset=utf-8"
+        if path.endswith((".jpg", ".jpeg")):
+            return "image/jpeg"
+        if path.endswith(".png"):
+            return "image/png"
+        if path.endswith(".webp"):
+            return "image/webp"
+        if path.endswith(".svg"):
+            return "image/svg+xml"
+        if path.endswith(".woff2"):
+            return "font/woff2"
+        return "application/octet-stream"
 
     async def _authenticated_user(self, headers: dict[str, str]) -> str:
         token = _bearer(headers)
