@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOCTURNE — Reserve Exceptional Tables</title>
+  <meta name="description" content="Cinematic dark-theme luxury fine dining reservation platform across global cities. Discover exceptional restaurants and reserve your table instantly.">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="main-nav">
+    <a href="#view-discover" class="brand" id="brand-logo" onclick="app.scrollToSection('view-discover'); return false;">
+      <div class="brand-icon">N</div>
+      <span class="brand-title">NOCTURNE</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a class="nav-link active" id="nav-discover" onclick="app.scrollToSection('view-discover')">Discover</a></li>
+      <li><a class="nav-link" id="nav-availability" onclick="app.scrollToSection('view-availability')">Availability</a></li>
+      <li><a class="nav-link" id="nav-reservations" onclick="app.scrollToSection('view-my-reservations')">My Reservations</a></li>
+    </ul>
+
+    <div class="user-nav-actions">
+      <div class="auth-status-badge" id="auth-status-badge">
+        <span class="status-dot"></span>
+        <span id="user-display-name">Guest User</span>
+      </div>
+      <button class="btn btn-secondary btn-sm" id="auth-btn" onclick="app.openAuthModal()">Sign In</button>
+    </div>
+  </header>
+
+  <main id="app-content">
+
+    <!-- SECTION 1: DISCOVER / HERO & MULTI-CITY SEARCH -->
+    <section id="view-discover" class="view-section">
+      <div class="hero" style="background-image: url('/assets/hero.jpg');">
+        <div class="hero-content">
+          <span class="hero-subtitle">Cinematic Reservations</span>
+          <h1 class="hero-title">Find your table.<br>Make your evening.</h1>
+          <p class="hero-description">Discover 50 exceptional restaurants, pubs, lounges, and hotels across 10 global cities. Explore real-time availability and reserve your perfect table.</p>
+
+          <!-- Search Experience Bar with City Selector -->
+          <div class="search-container">
+            <form id="search-form" class="search-form" onsubmit="app.handleSearchSubmit(event)">
+              <div class="field-group">
+                <label class="field-label" for="search-city">City</label>
+                <select id="search-city" class="input-select" onchange="app.handleCityFilterChange(this.value)">
+                  <option value="ALL">All Global Cities (10)</option>
+                  <option value="Mumbai">Mumbai 🇮🇳</option>
+                  <option value="Paris">Paris 🇫🇷</option>
+                  <option value="Tokyo">Tokyo 🇯🇵</option>
+                  <option value="London">London 🇬🇧</option>
+                  <option value="New York">New York 🇺🇸</option>
+                  <option value="Dubai">Dubai 🇦🇪</option>
+                  <option value="Rome">Rome 🇮🇹</option>
+                  <option value="Singapore">Singapore 🇸🇬</option>
+                  <option value="Los Angeles">Los Angeles 🇺🇸</option>
+                  <option value="Berlin">Berlin 🇩🇪</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="search-restaurant">Restaurant / Venue</label>
+                <select id="search-restaurant" class="input-select" required>
+                  <option value="">Loading venues...</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="search-date">Date</label>
+                <input type="date" id="search-date" class="input-date" required>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="search-time">Time</label>
+                <select id="search-time" class="input-select" required>
+                  <option value="12:00">12:00 PM</option>
+                  <option value="12:30">12:30 PM</option>
+                  <option value="13:00">1:00 PM</option>
+                  <option value="13:30">1:30 PM</option>
+                  <option value="18:00">6:00 PM</option>
+                  <option value="18:30">6:30 PM</option>
+                  <option value="19:00" selected>7:00 PM</option>
+                  <option value="19:30">7:30 PM</option>
+                  <option value="20:00">8:00 PM</option>
+                  <option value="20:30">8:30 PM</option>
+                  <option value="21:00">9:00 PM</option>
+                  <option value="21:30">9:30 PM</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="search-guests">Guests</label>
+                <select id="search-guests" class="input-select" required>
+                  <option value="1">1 Guest</option>
+                  <option value="2">2 Guests</option>
+                  <option value="3">3 Guests</option>
+                  <option value="4" selected>4 Guests</option>
+                  <option value="5">5 Guests</option>
+                  <option value="6">6 Guests</option>
+                  <option value="8">8 Guests</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" style="visibility: hidden;">Action</label>
+                <button type="submit" class="btn btn-primary" id="btn-search-tables">
+                  FIND A TABLE
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Restaurants Grid Section with City Filter Bar -->
+      <div class="section reveal-on-scroll">
+        <div class="section-header" style="flex-direction: column; align-items: flex-start; gap: 1rem;">
+          <div>
+            <h2 class="section-title">Global Culinary Destinations</h2>
+            <p class="section-subtitle">Explore handpicked fine dining, rooftop bars, omakase counters, and gastropubs</p>
+          </div>
+
+          <!-- City Filter Pills Strip -->
+          <div class="city-filter-strip" id="city-filter-strip" role="tablist" aria-label="Filter by City">
+            <button class="city-chip active" onclick="app.filterByCity('ALL')">All Cities</button>
+            <button class="city-chip" onclick="app.filterByCity('Mumbai')">Mumbai 🇮🇳</button>
+            <button class="city-chip" onclick="app.filterByCity('Paris')">Paris 🇫🇷</button>
+            <button class="city-chip" onclick="app.filterByCity('Tokyo')">Tokyo 🇯🇵</button>
+            <button class="city-chip" onclick="app.filterByCity('London')">London 🇬🇧</button>
+            <button class="city-chip" onclick="app.filterByCity('New York')">New York 🇺🇸</button>
+            <button class="city-chip" onclick="app.filterByCity('Dubai')">Dubai 🇦🇪</button>
+            <button class="city-chip" onclick="app.filterByCity('Rome')">Rome 🇮🇹</button>
+            <button class="city-chip" onclick="app.filterByCity('Singapore')">Singapore 🇸🇬</button>
+            <button class="city-chip" onclick="app.filterByCity('Los Angeles')">Los Angeles 🇺🇸</button>
+            <button class="city-chip" onclick="app.filterByCity('Berlin')">Berlin 🇩🇪</button>
+          </div>
+        </div>
+
+        <div class="restaurant-grid" id="restaurant-grid">
+          <!-- Dynamically Rendered Cards -->
+          <div class="skeleton" style="height: 340px;"></div>
+          <div class="skeleton" style="height: 340px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ambient Section Divider -->
+    <div class="section-divider"></div>
+
+    <!-- SECTION 2: DEDICATED THEMED VENUE AVAILABILITY & FLOOR PLAN -->
+    <section id="view-availability" class="view-section">
+      <div class="section">
+        
+        <!-- Dedicated Venue Theme Hero Banner -->
+        <div class="venue-theme-banner" id="venue-theme-banner" style="background-image: url('/assets/mumbai.jpg');">
+          <div class="venue-banner-overlay">
+            <div class="venue-banner-header">
+              <div>
+                <span class="venue-category-badge" id="avail-venue-category">Indian Royal Fine Dining</span>
+                <h2 id="avail-restaurant-name" class="heading-serif" style="font-size: 2.8rem; margin: 0.4rem 0;">The Royal Pavilion & Palace</h2>
+                <div style="display: flex; gap: 1rem; align-items: center; color: var(--text-secondary); font-size: 0.9rem;">
+                  <span id="avail-venue-city">📍 Mumbai, India</span>
+                  <span>•</span>
+                  <span id="avail-timezone">Timezone: Asia/Kolkata</span>
+                  <span>•</span>
+                  <span>🪑 6 Private Tables</span>
+                </div>
+              </div>
+
+              <div class="params-summary">
+                <div class="param-pill">
+                  <span class="param-pill-label">Date</span>
+                  <span class="param-pill-value" id="avail-summary-date">Today</span>
+                </div>
+                <div class="param-pill">
+                  <span class="param-pill-label">Time</span>
+                  <span class="param-pill-value" id="avail-summary-time">19:00</span>
+                </div>
+                <div class="param-pill">
+                  <span class="param-pill-label">Guests</span>
+                  <span class="param-pill-value" id="avail-summary-guests">4 Guests</span>
+                </div>
+                <button class="btn btn-outline-gold btn-sm" onclick="app.scrollToSection('view-discover')">Change Venue</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Availability Loading State (Polished Skeleton) -->
+        <div class="availability-loading-state" id="availability-loading-state" style="display: none;">
+          <div class="loading-pulse-box">
+            <div class="luxury-spinner"></div>
+            <span class="loading-text">CONSULTING REAL-TIME FLOOR PLAN & TIMELINE...</span>
+          </div>
+        </div>
+
+        <!-- Availability Error Alert Box (Proper NOCTURNE Styled Error) -->
+        <div class="availability-error-card" id="availability-error-card" style="display: none;">
+          <div class="error-card-icon">⚠</div>
+          <div class="error-card-content">
+            <h4 class="error-title">Availability Temporarily Unavailable</h4>
+            <p class="error-desc" id="availability-error-message">Could not retrieve live table slots from server.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="app.loadAvailability()">RETRY AVAILABILITY</button>
+        </div>
+
+        <!-- Time Slot Selection Timeline Strip -->
+        <div class="timeline-strip" id="timeline-strip" style="margin-top: 2rem;">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Interactive Floor Plan Visualization -->
+        <div class="floorplan-container" id="floorplan-container">
+          <div class="section-header" style="margin-bottom: 1.5rem;">
+            <div>
+              <h3 class="floorplan-title">Select Table</h3>
+              <p class="section-subtitle">Live table availability for <span class="text-gold" id="selected-slot-time-label">19:00</span></p>
+            </div>
+
+            <div class="floorplan-legend">
+              <div class="legend-item">
+                <div class="legend-color available"></div>
+                <span>Available</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color selected"></div>
+                <span>Selected</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color unavailable"></div>
+                <span>Reserved</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Table Visual Cards Grid -->
+          <div class="tables-grid" id="tables-grid">
+            <!-- Dynamically populated tables -->
+          </div>
+
+          <!-- Combined Table Indicator (Conditional) -->
+          <div class="combined-tables-banner" id="combined-tables-banner" style="display: none;">
+            <div class="combined-info">
+              <div class="combined-icon">✦</div>
+              <div>
+                <strong class="text-gold">COMBINED TABLE CONFIGURATION AVAILABLE</strong>
+                <p style="font-size: 0.85rem; color: var(--text-secondary);" id="combined-tables-text">Tables 1 & 2 can be joined for up to 6 guests.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Booking Summary & Instant Reservation Action -->
+        <div class="booking-summary-panel reveal-on-scroll" id="booking-summary-panel">
+          <h3 class="heading-serif" style="font-size: 1.5rem;">Reservation Summary</h3>
+
+          <div class="summary-grid">
+            <div class="summary-item">
+              <span class="summary-label">Restaurant</span>
+              <span class="summary-value" id="summary-restaurant">The Royal Pavilion</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Date & Time</span>
+              <span class="summary-value" id="summary-datetime">2026-10-18 at 19:00</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Party Size</span>
+              <span class="summary-value" id="summary-party">4 Guests</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Selected Table</span>
+              <span class="summary-value text-gold" id="summary-table">Table 2</span>
+            </div>
+          </div>
+
+          <!-- Guest Dining Details -->
+          <div class="booking-guest-fields" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.5rem 0; padding-top: 1.5rem; border-top: 1px solid var(--border-subtle);">
+            <div class="field-group">
+              <label class="field-label" for="booking-guest-name">Guest Name</label>
+              <input type="text" id="booking-guest-name" class="input-text" placeholder="e.g. Eleanor Vance" required autocomplete="name">
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="booking-guest-email">Confirmation Email</label>
+              <input type="email" id="booking-guest-email" class="input-text" placeholder="e.g. guest@example.com" required autocomplete="email">
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="booking-special-requests">Special Dining Notes (Optional)</label>
+              <input type="text" id="booking-special-requests" class="input-text" placeholder="e.g. Window table, Anniversary celebration">
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem;">
+            <span class="text-muted" style="font-size: 0.85rem;">🔒 Instant confirmation protected with idempotent transaction key.</span>
+            <button class="btn btn-primary" id="btn-confirm-booking" onclick="app.handleConfirmReservation()">
+              CONFIRM RESERVATION
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Ambient Section Divider -->
+    <div class="section-divider"></div>
+
+    <!-- SECTION 3: MY RESERVATIONS -->
+    <section id="view-my-reservations" class="view-section">
+      <div class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">My Reservations</h2>
+            <p class="section-subtitle">Manage your upcoming and past bookings</p>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="btn-refresh-reservations" onclick="app.fetchUserReservations()">Refresh</button>
+        </div>
+
+        <!-- Reservation Lookup Box -->
+        <div class="reservation-lookup-box reveal-on-scroll" id="reservation-lookup-box" style="margin-bottom: 2rem;">
+          <div class="lookup-card-inner">
+            <div style="flex: 1;">
+              <h3 class="heading-serif" style="font-size: 1.35rem; margin-bottom: 0.25rem;">Find a Reservation</h3>
+              <p class="text-muted" style="font-size: 0.85rem;">Look up booking details instantly by reference code</p>
+            </div>
+            <form class="lookup-inline-form" onsubmit="app.handleLookupSubmit(event)">
+              <input type="text" id="lookup-ref-input" class="input-text" placeholder="Reference code (e.g. 89X12ABCD)" required style="min-width: 260px; text-transform: uppercase; font-family: monospace; letter-spacing: 0.05em;">
+              <button type="submit" class="btn btn-primary btn-sm" id="btn-lookup-ref">LOOKUP</button>
+            </form>
+          </div>
+          <div id="lookup-result-container" style="display: none; margin-top: 1.25rem;"></div>
+        </div>
+
+        <div class="reservations-list" id="my-reservations-list">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- CONFIRMATION OVERLAY MODAL -->
+  <div class="modal-overlay" id="confirmation-modal">
+    <div class="modal-card" style="max-width: 620px; text-align: center;">
+      <div class="success-icon-animated">
+        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+
+      <span class="hero-subtitle">Reservation Confirmed</span>
+      <h2 class="heading-serif" style="font-size: 2.2rem; margin: 0.5rem 0;">We're looking forward to hosting you</h2>
+      <p class="text-muted" style="font-size: 0.9rem;">A confirmation receipt has been issued for your reservation.</p>
+
+      <div class="reference-badge-box">
+        <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted);">Reservation Reference</span>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-top: 0.35rem;">
+          <span class="reference-code" id="confirmation-ref">REF-89X12</span>
+          <button type="button" class="btn btn-outline-gold btn-xs" id="btn-copy-ref" onclick="app.copyReferenceCode()" title="Copy code">Copy</button>
+        </div>
+      </div>
+
+      <div class="summary-grid" style="text-align: left; margin-bottom: 2rem;">
+        <div class="summary-item">
+          <span class="summary-label">Restaurant</span>
+          <span class="summary-value" id="conf-restaurant">The Royal Pavilion</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Date & Time</span>
+          <span class="summary-value" id="conf-datetime">2026-10-18 at 19:00</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Party Size</span>
+          <span class="summary-value" id="conf-party">4 Guests</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Table</span>
+          <span class="summary-value text-gold" id="conf-table">Table 2</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Guest Name</span>
+          <span class="summary-value" id="conf-guest-name">Guest User</span>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 1rem; justify-content: center;">
+        <button class="btn btn-secondary" onclick="app.closeConfirmationModal(); app.scrollToSection('view-my-reservations');">View My Reservations</button>
+        <button class="btn btn-primary" onclick="app.closeConfirmationModal(); app.scrollToSection('view-discover');">Book Another Table</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auth Modal -->
+  <div class="modal-overlay" id="auth-modal">
+    <div class="modal-card">
+      <h3 class="heading-serif" style="font-size: 1.8rem; margin-bottom: 0.5rem;">Sign In to Nocturne</h3>
+      <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 1.5rem;">Log in to manage bookings or switch active test credentials.</p>
+
+      <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem;">
+        <span class="field-label">Quick Sign In Presets</span>
+        <button class="btn btn-secondary" onclick="app.loginAs('guest@example.com', 'correct horse')">
+          Sign In as Guest User (guest@example.com)
+        </button>
+        <button class="btn btn-secondary" onclick="app.loginAs('ada@example.com', 'correct horse')">
+          Sign In as Ada (ada@example.com)
+        </button>
+        <button class="btn btn-secondary" onclick="app.loginAs('bob@example.com', 'correct horse')">
+          Sign In as Bob (bob@example.com)
+        </button>
+      </div>
+
+      <div style="border-top: 1px solid var(--border-subtle); padding-top: 1.5rem;">
+        <form id="auth-form" onsubmit="app.handleAuthSubmit(event)">
+          <div class="field-group" style="margin-bottom: 1rem;">
+            <label class="field-label" for="auth-email">Email Address</label>
+            <input type="email" id="auth-email" class="input-text" required placeholder="user@example.com">
+          </div>
+          <div class="field-group" style="margin-bottom: 1.5rem;">
+            <label class="field-label" for="auth-password">Password</label>
+            <input type="password" id="auth-password" class="input-text" required placeholder="••••••••">
+          </div>
+          <div style="display: flex; justify-content: space-between; gap: 1rem;">
+            <button type="button" class="btn btn-secondary" onclick="app.closeAuthModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Sign In</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
